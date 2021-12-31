@@ -89,7 +89,7 @@ function InstructionStages({ isTryOnLoading, onVisualiseDress }) {
                 <Box width="100%">
                   <Cropper
                     style={{ height: 350, width: '100%' }}
-                    zoomTo={0.5}
+                    zoomTo={0}
                     initialAspectRatio={1}
                     // preview=".img-preview"
                     src={image}
