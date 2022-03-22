@@ -1,4 +1,4 @@
-import { Box, Button, Container, HStack, Image, Text } from '@chakra-ui/react';
+import { Box, Button, Container, Image } from '@chakra-ui/react';
 import React from 'react';
 import { dressData } from '../../utils/data';
 import ChakraCarousel from '../ChakraCarousel/ChakraCarousel';

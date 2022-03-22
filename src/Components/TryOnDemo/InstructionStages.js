@@ -11,7 +11,6 @@ import {
   AccordionItem,
   AccordionButton,
   AccordionPanel,
-  AccordionIcon,
   HStack,
   VStack,
   SimpleGrid,
@@ -19,7 +18,7 @@ import {
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import Model from '../../Assets/Images/model.png';
-import { CheckIcon,CheckCircleIcon, ChevronRightIcon,NotAllowedIcon } from '@chakra-ui/icons';
+import { CheckIcon,CheckCircleIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import ChooseCloth from './ChooseCloth';
 
 function InstructionStages({ isTryOnLoading, onVisualiseDress }) {
