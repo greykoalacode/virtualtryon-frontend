@@ -19,23 +19,23 @@ function ChooseCloth({ onClick }) {
     >
       <ChakraCarousel gap={32}>
         {dressData.map(each => (
-          <Box bg="spearmint" p={[2, 5]} borderRadius="0.25em" key={each.name}>
+          <Box p={[2, 5]} borderRadius="0.25em" key={each.name} textAlign="center">
             <Image src={each.image} alt={each.name} />
-            <HStack
+            {/* <HStack
               spacing={5}
               direction={['column', 'row']}
               justify="space-between"
-            >
-              <Text
+            > */}
+              {/* <Text
                 fontWeight="500"
                 fontSize={{ base: '2xl', md: '3xl', lg: '4xl' }}
               >
                 {each.name}
-              </Text>
+              </Text> */}
               <Button size="sm" variant="solid" onClick={onClick}>
                 Choose
               </Button>
-            </HStack>
+            {/* </HStack> */}
           </Box>
         ))}
       </ChakraCarousel>

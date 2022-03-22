@@ -1,6 +1,8 @@
-import { Box, Text, Image, Stack, Button, Spinner } from '@chakra-ui/react';
+import { Box, Text, Image, Stack, Button, Spinner, HStack } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import Tshirt from '../../Assets/Images/Tshirt.png';
+import RoughOP from '../../Assets/Images/roughOP.png';
+import Model from '../../Assets/Images/model.png';
+import RoughWarp from '../../Assets/Images/roughwarp.jpg';
 import InstructionStages from './InstructionStages';
 
 function TryOnDemo() {
@@ -47,10 +49,23 @@ function TryOnDemo() {
       <Box p={[2, 5]} borderRadius="0.25em" boxShadow="md">
         {showFinal ? (
           <Stack align="center" spacing={5}>
-            <Text fontWeight="700" size={{ base: '2xl', md: '3xl', lg: '4xl' }}>
-              Final Image
+            <Text fontWeight="700" fontSize={{ base: '2xl', md: '3xl', lg: '4xl' }}>
+              Final Image(s)
             </Text>
-            <Image boxSize={['sm', 'md']} src={Tshirt} />
+            <HStack textAlign="center">
+              <Box>
+                <Text fontSize="2xl" fontWeight="bold">Model</Text>
+                <Image boxSize="300px" src={Model} />
+              </Box>
+              <Box>
+                <Text fontSize="2xl" fontWeight="bold">Warped Cloth</Text>
+                <Image boxSize="300px" src={RoughWarp} />
+              </Box>
+              <Box>
+                <Text fontSize="2xl" fontWeight="bold">Rough Output</Text>
+                <Image boxSize="300px" src={RoughOP} />
+              </Box>
+            </HStack>
             <Button as="a" href="/">
               Back to Homepage
             </Button>
@@ -67,17 +82,6 @@ function TryOnDemo() {
           />
         )}
       </Box>
-      {/* <Box p={[5, 10, 15]} borderRadius="1em"> */}
-      {/* <HStack direction={['column','row']} spacing="1em">
-          <Text fontWeight="500" fontSize={{ base: '2xl', md: '3xl' }}>
-            Upload Person Image
-          </Text>
-          <Flex border="1px" position="relative" bg="tealGreen" borderRadius="1em" padding="2" textAlign="center" maxW="120px">
-            <Text fontWeight="500" fontSize="xl">Click here</Text>
-            <Input position="absolute" opacity="0" type="file" onChange={onSelectImage} accept="image/*" />
-          </Flex>
-        </HStack> */}
-      {/* </Box> */}
     </Box>
   );
 }

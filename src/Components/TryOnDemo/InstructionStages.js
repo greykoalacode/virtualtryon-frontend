@@ -7,22 +7,26 @@ import {
   Button,
   Stack,
   Flex,
-  List,
-  ListItem,
-  ListIcon,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
   HStack,
+  VStack,
   SimpleGrid,
 } from '@chakra-ui/react';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
-import { CheckCircleIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import Model from '../../Assets/Images/model.png';
+import { CheckIcon,CheckCircleIcon, ChevronRightIcon,NotAllowedIcon } from '@chakra-ui/icons';
 import ChooseCloth from './ChooseCloth';
 
 function InstructionStages({ isTryOnLoading, onVisualiseDress }) {
   const [image, setImage] = useState(null);
   const [cropData, setCropData] = useState('#');
   const [cropper, setCropper] = useState();
-  const [isDone, setDone] = useState(false);
+  const [stage, setStage] = useState(0);
   const [isDressChosen, setDressChosen] = useState(false);
   const onSelectImage = e => {
     e.preventDefault();
@@ -48,43 +52,60 @@ function InstructionStages({ isTryOnLoading, onVisualiseDress }) {
       <Text fontSize={{ base: 'xl', md: '2xl', lg: '3xl' }} fontWeight="500">
         Instructions
       </Text>
-      <List spacing={3}>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} />
-          <b>Upload the Person Image here</b>
-          <Flex
-            border="1px"
-            position="relative"
-            bg="tealGreen"
-            borderRadius="0.25em"
-            padding="2"
-            ml="5"
-            textAlign="center"
-            // cursor="pointer"
-            maxW="100px"
-          >
-            <Text
-              color="mint"
-              fontWeight="500"
-              fontSize="sm"
-              textTransform="uppercase"
-            >
-              Click here
-            </Text>
-            <Input
-              position="absolute"
-              opacity="0"
-              type="file"
-              onChange={onSelectImage}
-              accept="image/*"
-            />
-          </Flex>
-        </ListItem>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} />
-          <b>Crop the image here (Upper Half of person to be selected)</b>
-          <Box position="relative">
-            {image && !isDone && (
+      <Accordion defaultIndex={[stage]} allowMultiple>
+        <AccordionItem >
+          <h2>
+            <AccordionButton>
+              <Box flex='1' textAlign='left' fontWeight="bold">
+                Upload & Crop your image
+              </Box>
+              {stage > 0 ? <CheckCircleIcon/> : <CheckIcon />}
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+            <Box display={image === null ? "block":"none"}>
+            <VStack spacing={5} align="left">
+                <Box>
+                  <Image src={Model} alt="model" />
+                  <Button my="2" variant="solid" size="sm" onClick={() => setImage(Model)}>
+                    Choose Existing Model
+                  </Button>
+                </Box>
+                <Text fontWeight="bold">OR</Text>
+                <Flex
+                  border="1px"
+                  position="relative"
+                  bg="tealGreen"
+                  borderRadius="0.25em"
+                  padding="2"
+                  ml="0"
+                  // 
+                  textAlign="center"
+                  cursor="pointer"
+                  maxW="120px"
+                >
+                  <Text
+                    color="mint"
+                    fontWeight="500"
+                    fontSize="sm"
+                    textTransform="uppercase"
+                  >
+                    Upload Image
+                  </Text>
+                  <Input
+                    position="absolute"
+                    opacity="0"
+                    type="file"
+                    onChange={onSelectImage}
+                    accept="image/*"
+                  />
+                </Flex>
+              </VStack>
+            </Box>
+            <Box position="relative">
+            {image && stage===0 && (
+              <>
+              <b>Crop the image here (Upper Half of person to be selected)</b>
               <Box p={[2, 5]}>
                 <Box width="100%">
                   <Cropper
@@ -138,7 +159,7 @@ function InstructionStages({ isTryOnLoading, onVisualiseDress }) {
                           <Button
                             size="sm"
                             variant="solid"
-                            onClick={() => setDone(true)}
+                            onClick={() => setStage(stage+1)}
                           >
                             Finalise Crop
                           </Button>
@@ -158,21 +179,40 @@ function InstructionStages({ isTryOnLoading, onVisualiseDress }) {
                   </Box>
                 </Box>
               </Box>
+              </>
             )}
           </Box>
-        </ListItem>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} />
-          <b>Choose your preferred Cloth here</b>
-          {isDone && !isDressChosen && (
+          </AccordionPanel>
+        </AccordionItem>
+
+        <AccordionItem isDisabled={stage !== 1}>
+          {({isExpanded}) => (
+            <>
+          <h2>
+            <AccordionButton>
+              <Box flex='1' textAlign='left' fontWeight="bold">
+                Choose Dress
+              </Box>
+              {
+                isExpanded ? <CheckCircleIcon/> : <CheckIcon />
+              }
+              {/* <AccordionIcon /> */}
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+          {stage===1 && !isDressChosen && (
             <ChooseCloth onClick={() => setDressChosen(true)} />
           )}
-        </ListItem>
-      </List>
+          </AccordionPanel>
+          </>
+
+          )}
+        </AccordionItem>
+      </Accordion>
       <Button
         my="5"
         variant="solid"
-        disabled={!isDone && !isDressChosen}
+        disabled={stage !== 4 && !isDressChosen}
         isLoading={isTryOnLoading}
         rightIcon={<ChevronRightIcon />}
         onClick={onVisualiseDress}
